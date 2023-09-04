@@ -1,7 +1,7 @@
 import { Dropdown, Image } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import { BiShoppingBag } from "react-icons/bi";
+import ShoppingBag from "./ShoppingBag";
 import useFetchData from "../hooks/fetchData";
 import { getCategories } from "../config/api";
 import Sidebar from "./sidebar";
@@ -62,7 +62,7 @@ export default function Navbar() {
                   size="24px"
                   onClick={() => setShowSearch(!showSearch)}
                 />
-                <BiShoppingBag style={{ cursor: "pointer" }} size="24px" />
+                <ShoppingBag />
                 {currentUser ? (
                   <Dropdown>
                     <Dropdown.Toggle variant="none" id="dropdown-basic">
