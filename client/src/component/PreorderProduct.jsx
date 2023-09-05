@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export default function Preorder({ data }) {
   const flattenData = data.flatMap((product)=>product)
   const filterByPreorder = flattenData.filter((item) => item.condition === "Preorder");
-  console.log("preorder", filterByPreorder);
   return (
     <div className="my-5 text-center">
       <h1 className="fs-4 fw-bold">PREORDER</h1>

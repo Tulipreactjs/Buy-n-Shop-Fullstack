@@ -19,7 +19,6 @@ import { useStore } from "../config/store";
 import useScroll from "../hooks/scroll";
 import { AiFillLike } from "react-icons/ai";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
-import { get } from "react-hook-form";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -28,10 +27,16 @@ export default function ProductDetail() {
   const [showModal, setShowModal] = useState(false);
   const { error, data, loading } = useFetchData(getAllProducts);
   const { scroll, scrollRef } = useScroll();
-  const { currentUser, setCurrentUser } = useStore();
+  const { currentUser, setCurrentUser, increaseCartQty , setShow} = useStore();
   const suggestedProducts = data.filter(
     (product) => product.category !== state?.product?.category
   );
+
+  const addToCart = (item)=> {
+    increaseCartQty(item)
+    toast.success(`${item.title} Added to bag`)
+    setShow(true)
+  }
 
   const handleLike = async () => {
     try {
@@ -163,7 +168,7 @@ export default function ProductDetail() {
               <p className="mt-3 fs-5">
                 {formatCurrency(state?.product?.price)}
               </p>
-              <Button variant="dark" className="mt-3 w-100 rounded-0">
+              <Button variant="dark" className="mt-3 w-100 rounded-0" onClick={()=>addToCart(state?.product)}>
                 ADD TO BAG
               </Button>
 
