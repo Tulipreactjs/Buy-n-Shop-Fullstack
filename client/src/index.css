@@ -162,4 +162,12 @@
   .cardBox:focus-within .focus-content {
     opacity: 1;
   }
+
+  .hidetrash {
+    opacity: 0;
+  }
+
+  .qtyBox:hover .hidetrash {
+    opacity: 1;
+  }
 }

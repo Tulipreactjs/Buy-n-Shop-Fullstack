@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import { formatCurrency } from "../utils/formatCurrency";
+import { useStore } from "../config/store";
+
 
 export default function Featuredproduct({ data }) {
   const [current, setCurrent] = useState(0);
@@ -16,6 +18,13 @@ export default function Featuredproduct({ data }) {
   };
   const prevSlide = () => {
     setCurrent(current == 0 ? length - 1 : current - 1);
+  };
+  const { increaseCartQty, setShow } = useStore();
+
+  const addToCart = (item) => {
+    increaseCartQty(item);
+    toast.success(`${item.title} Added to bag`);
+    setShow(true);
   };
   return (
     <>
@@ -99,7 +108,7 @@ export default function Featuredproduct({ data }) {
                     {product.title}
                   </Link>
                   <h1 className="fs-2">{formatCurrency(product.price)}</h1>
-                  <Button variant="dark rounded-2">ADD TO BAG</Button>
+                  <Button variant="dark rounded-2" onClick={() => addToCart(product)}>ADD TO BAG</Button>
                 </>
               )}
             </div>

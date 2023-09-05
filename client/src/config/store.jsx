@@ -16,8 +16,6 @@ export const StateContext = ({ children }) => {
     }
   }, [currentUser]);
 
-  localStorage.setItem("userinfo", JSON.stringify(currentUser));
-
   //retrieve user from local storage
   useEffect(() => {
     const retrieveUser = JSON.parse(localStorage.getItem("userinfo"));
@@ -40,6 +38,7 @@ export const StateContext = ({ children }) => {
       setCartItems(retrieveCart);
     }
   }, []);
+
 
   //addtocart/increment qty
 
