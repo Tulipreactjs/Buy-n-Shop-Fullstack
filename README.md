@@ -24,7 +24,7 @@ git clone https://github.com/Tulipreactjs/Buy-n-Shop-Fullstack.git
 Navigate to the project directory:
 
 
-```cd Buy-n-Shop-Fullstack```
+``` `bash` cd Buy-n-Shop-Fullstack```
 
 Install the dependencies for both the server and client:
 
