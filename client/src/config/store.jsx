@@ -3,11 +3,47 @@ import { toast } from "react-hot-toast";
 const Context = createContext();
 let initialUser = "";
 let initialCart = [];
+let shippingData = {};
+let paymentData = "";
 export const StateContext = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(initialUser);
   const [cartItems, setCartItems] = useState(initialCart);
   const [show, setShow] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState(paymentData);
+  const [shippingDetails, setShippingDetails] = useState(shippingData);
   console.log("cartItems", cartItems);
+
+  //save payment method
+  useEffect(() => {
+    if (paymentMethod !== paymentData) {
+      localStorage.setItem("paymentType", JSON.stringify(paymentMethod));
+    }
+  }, [paymentMethod]);
+
+  //retrieve paymentMethod
+
+  useEffect(() => {
+    const getPaymentMethod = JSON.parse(localStorage.getItem("paymentType"));
+    if (getPaymentMethod) {
+      setPaymentMethod(getPaymentMethod);
+    }
+  }, []);
+
+  //save shipping details
+  useEffect(() => {
+    if (shippingDetails !== shippingData) {
+      localStorage.setItem("shippingInfo", JSON.stringify(shippingDetails));
+    }
+  }, [shippingDetails]);
+
+  //retrieve shipping details
+
+  useEffect(() => {
+    const shipData = JSON.parse(localStorage.getItem("shippingInfo"));
+    if (shipData) {
+      setShippingDetails(shipData);
+    }
+  }, []);
 
   //save user to local storage
   useEffect(() => {
@@ -39,13 +75,12 @@ export const StateContext = ({ children }) => {
     }
   }, []);
 
-
   //addtocart/increment qty
 
   const increaseCartQty = (id) => {
     setCartItems((currentItems) => {
       if (currentItems.find((item) => item._id === id._id) == null) {
-        return [...currentItems, {...id, quantity: 1 }];
+        return [...currentItems, { ...id, quantity: 1 }];
       } else {
         return currentItems.map((item) => {
           if (item._id === id._id) {
@@ -66,9 +101,8 @@ export const StateContext = ({ children }) => {
         return currentItems.map((item) => {
           if (item._id === id._id) {
             return { ...item, quantity: item.quantity - 1 };
-          }
-          else{
-            return item
+          } else {
+            return item;
           }
         });
       }
@@ -114,6 +148,10 @@ export const StateContext = ({ children }) => {
         priceTotal,
         show,
         setShow,
+        shippingDetails,
+        setShippingDetails,
+        paymentMethod,
+        setPaymentMethod,
       }}
     >
       {children}

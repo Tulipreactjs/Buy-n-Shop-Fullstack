@@ -7,7 +7,7 @@ export default function Root() {
   return (
     <>
       <Navbar />
-      <main>
+      <main style={{ minHeight: "92vh" }}>
         <Outlet />
       </main>
       <Footer />

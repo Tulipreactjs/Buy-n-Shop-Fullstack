@@ -1,4 +1,4 @@
-import Order from "../models/order";
+import Order from "../models/order.js";
 
 //create order
 
@@ -54,5 +54,46 @@ export const getAllorders = async (req, res) => {
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+//get order details
+
+export const getOrderDetail = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const order = await Order.findById(id).populate("user", "username email");
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+//track an order
+
+export const trackOrders = async (req, res) => {
+  try {
+    const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (order.paymentMethod === "Cash" && order.status === 2) {
+      order.isPaid = true;
+      order.paidAt = Date.now();
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+    }
+    if (order.paymentMethod === "Paypal" && order.status === 2) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+    }
+    const updatedOrder = await order.save();
+    res.status(201).json(updatedOrder);
+  } catch (error) {
+    res.status(500).json(error)
   }
 };

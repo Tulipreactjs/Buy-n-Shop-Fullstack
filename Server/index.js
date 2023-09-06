@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/product.js";
 import categoryRoutes from "./routes/category.js";
+import orderRoutes from "./routes/order.js";
 
 const app = express(); //initialize express
 config();
@@ -16,6 +17,7 @@ app.disable("x-powered-by"); //to disable  x-powered header that prevents the he
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/categories", categoryRoutes);
+app.use("api/v1/orders", orderRoutes);
 
 app.use((error, req, res) => {
   const status = error.status || 500;

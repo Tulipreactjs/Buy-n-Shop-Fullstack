@@ -43,9 +43,13 @@ export const likeProduct = async (productId, userId, token) => {
 };
 
 export const disLikeProduct = async (productId, userId, token) => {
-  const res = await instance.put(`/api/v1/products/${productId}/dislike`, userId, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await instance.put(
+    `/api/v1/products/${productId}/dislike`,
+    userId,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
 
   return res;
 };
@@ -66,5 +70,35 @@ export const loginUser = async (username, password) => {
     password,
   });
 
+  return res;
+};
+
+/// ORDERS
+
+export const createOrder = async (order, token) => {
+  const res = await instance.post("/api/v1/orders/create", order, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
+
+export const getUserOrders = async (token) => {
+  const res = await instance.get("/api/v1/orders/user", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
+
+export const getAllUserOrders = async (token) => {
+  const res = await instance.get("/api/v1/orders", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
+
+export const getOrderDetail = async (orderId, token) => {
+  const res = await instance.get(`/api/v1/orders/${orderId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return res;
 };

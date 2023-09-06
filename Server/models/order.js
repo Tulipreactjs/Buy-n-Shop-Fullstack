@@ -1,5 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
-import Categories from "../../client/src/pages/Categories";
+import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
